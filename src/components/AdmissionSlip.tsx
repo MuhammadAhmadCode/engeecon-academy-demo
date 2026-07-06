@@ -5,113 +5,122 @@ import Link from "next/link";
 
 const FIELDS = [
   { label: "APPLICANT NAME", value: "Ayesha Khan", delay: 0 },
-  { label: "ROLL NO", value: "ENG-2026-0471", delay: 500 },
-  { label: "SESSION", value: "July 2026 — Morning", delay: 1000 },
-  { label: "FIELD", value: "Pre-Medical", delay: 1400 },
-  { label: "STATUS", value: "Pending", delay: 1900, isStatus: true },
+  { label: "ROLL NO", value: "ENG-2026-0471", delay: 400 },
+  { label: "SESSION", value: "July 2026 — Morning", delay: 800 },
+  { label: "FIELD", value: "Pre-Medical", delay: 1100 },
+  { label: "STATUS", value: "Pending", delay: 1500, isStatus: true },
 ];
 
 export default function AdmissionSlip() {
-  const [visibleFields, setVisibleFields] = useState<number>(0);
-  const [prefersReduced, setPrefersReduced] = useState(false);
+  const [visible, setVisible] = useState(0);
+  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReduced(mq.matches);
+    setReduced(mq.matches);
   }, []);
 
   useEffect(() => {
-    if (prefersReduced) {
-      setVisibleFields(FIELDS.length);
-      return;
-    }
-    const timers = FIELDS.map((field, i) =>
-      setTimeout(() => setVisibleFields(i + 1), field.delay + 300)
+    if (reduced) { setVisible(FIELDS.length); return; }
+    const t = FIELDS.map((f, i) =>
+      setTimeout(() => setVisible(i + 1), f.delay + 200)
     );
-    return () => timers.forEach(clearTimeout);
-  }, [prefersReduced]);
+    return () => t.forEach(clearTimeout);
+  }, [reduced]);
 
   return (
-    <section className="relative bg-ink-navy overflow-hidden">
-      <div className="hero-gradient absolute inset-0" />
+    <section className="hero-bg relative overflow-hidden min-h-[85vh] flex items-center">
+      {/* subtle grid pattern */}
+      <div className="absolute inset-0 opacity-[0.015]" style={{
+        backgroundImage: `linear-gradient(rgba(201,162,39,1) 1px, transparent 1px), linear-gradient(90deg, rgba(201,162,39,1) 1px, transparent 1px)`,
+        backgroundSize: '80px 80px',
+      }} />
 
-      <div className="relative max-w-7xl mx-auto px-6 sm:px-10 pt-16 pb-20 sm:pt-24 sm:pb-28 lg:pt-32 lg:pb-36">
+      <div className="relative max-w-7xl mx-auto px-6 sm:px-10 w-full py-20 sm:py-28 lg:py-32">
         <div className="flex flex-col lg:flex-row items-center gap-14 lg:gap-20">
 
-          {/* Left: Copy */}
+          {/* Left */}
           <div className="flex-1 min-w-0 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2.5 bg-white/[0.06] border border-white/10 rounded-full px-4 py-1.5 mb-8">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+            <div className="inline-flex items-center gap-2.5 bg-white/[0.06] border border-white/10 rounded-full px-4 py-1.5 mb-8 animate-fade-up" style={{ animationDelay: '0.1s' }}>
+              <span className="w-2 h-2 rounded-full bg-emerald-400" style={{ animation: reduced ? 'none' : 'pulse-dot 2s ease-in-out infinite' }} />
               <span className="text-white/70 text-xs font-medium tracking-wide">
                 Admissions Open — July 2026
               </span>
             </div>
 
-            <h1 className="font-display text-white text-[2.5rem] sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.08] mb-6 tracking-tight">
+            <h1
+              className="font-display text-white text-[2.5rem] sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.08] mb-6 tracking-tight animate-fade-up"
+              style={{ animationDelay: '0.2s' }}
+            >
               Your admission
               <br />
               starts here<span className="text-gold">.</span>
             </h1>
 
-            <p className="text-white/45 text-lg sm:text-xl leading-relaxed mb-10 max-w-md mx-auto lg:mx-0">
+            <p
+              className="text-white/40 text-lg sm:text-xl leading-relaxed mb-10 max-w-md mx-auto lg:mx-0 animate-fade-up"
+              style={{ animationDelay: '0.35s' }}
+            >
               Apply online in 5 minutes. Track your application status in real time.
               No more WhatsApp follow-ups.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Link
-                href="/admission"
-                className="group inline-flex items-center justify-center gap-3 bg-gold text-ink-navy font-semibold text-sm px-8 py-3.5 rounded hover:bg-gold-light transition-all shadow-lg shadow-gold/20"
-              >
+            <div
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-up"
+              style={{ animationDelay: '0.5s' }}
+            >
+              <Link href="/admission" className="btn-primary">
                 Apply Now
-                <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
-              <Link
-                href="/admission"
-                className="inline-flex items-center justify-center gap-2 border border-white/15 text-white/60 text-sm px-8 py-3.5 rounded hover:border-white/25 hover:text-white/80 transition-all"
-              >
+              <Link href="/admission" className="btn-secondary">
                 Check Application Status
               </Link>
             </div>
           </div>
 
-          {/* Right: Admission Slip Card */}
-          <div className="w-full max-w-[380px] lg:max-w-none lg:w-[380px] shrink-0">
-            <div className="bg-white/[0.04] backdrop-blur-md card-glow rounded-lg overflow-hidden">
-              {/* Card Header */}
-              <div className="flex items-center justify-between px-6 py-3.5 border-b border-white/[0.08] bg-white/[0.02]">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-6 h-6 bg-gold/15 border border-gold/30 rounded flex items-center justify-center">
-                    <span className="font-display text-gold text-[9px] font-bold">E</span>
+          {/* Right: Slip Card */}
+          <div
+            className="w-full max-w-[380px] lg:max-w-none lg:w-[400px] shrink-0 animate-fade-up"
+            style={{ animationDelay: '0.4s' }}
+          >
+            <div className="slip-card rounded-2xl overflow-hidden backdrop-blur-md">
+              {/* Header */}
+              <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
+                <div className="flex items-center gap-3">
+                  <div className="w-7 h-7 bg-gold/15 border border-gold/30 rounded-lg flex items-center justify-center">
+                    <span className="font-display text-gold text-[10px] font-bold">E</span>
                   </div>
-                  <span className="text-white/50 text-[11px] font-semibold tracking-widest uppercase">
-                    Admission Slip
-                  </span>
+                  <div>
+                    <span className="text-white/60 text-[11px] font-semibold tracking-widest uppercase block">
+                      Admission Slip
+                    </span>
+                  </div>
                 </div>
-                <span className="text-white/25 text-[11px] font-medium">2026</span>
+                <span className="text-white/20 text-[11px] font-mono font-medium">2026</span>
               </div>
 
-              {/* Card Fields */}
-              <div className="px-6 py-2">
+              {/* Fields */}
+              <div className="px-6 py-1">
                 {FIELDS.map((field, i) => (
                   <div
                     key={field.label}
-                    className={`py-3.5 ${i < FIELDS.length - 1 ? "slip-line" : ""}`}
+                    className={`py-4 ${i < FIELDS.length - 1 ? "slip-line" : ""}`}
                     style={{
-                      opacity: visibleFields > i ? 1 : 0,
-                      transform: visibleFields > i ? "translateY(0)" : "translateY(8px)",
-                      transition: prefersReduced ? "none" : "all 0.5s cubic-bezier(0.22, 1, 0.36, 1)",
+                      opacity: visible > i ? 1 : 0,
+                      transform: visible > i ? "translateY(0)" : "translateY(8px)",
+                      transition: reduced ? "none" : "all 0.5s cubic-bezier(0.22, 1, 0.36, 1)",
                     }}
                   >
-                    <span className="text-white/30 text-[10px] font-semibold tracking-[0.2em] uppercase block mb-1">
+                    <span className="text-white/25 text-[10px] font-semibold tracking-[0.2em] uppercase block mb-1.5">
                       {field.label}
                     </span>
                     {field.isStatus ? (
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2.5">
                         <span className="text-gold text-sm font-semibold">{field.value}</span>
-                        <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+                        <span className="w-2 h-2 rounded-full bg-gold" style={{ animation: reduced ? 'none' : 'pulse-dot 2s ease-in-out infinite' }} />
                       </div>
                     ) : (
                       <span className="text-white text-sm font-medium">{field.value}</span>
@@ -120,11 +129,16 @@ export default function AdmissionSlip() {
                 ))}
               </div>
 
-              {/* Card Footer */}
-              <div className="px-6 py-3 border-t border-white/[0.06] bg-white/[0.02]">
-                <span className="text-white/20 text-[10px]">
+              {/* Footer */}
+              <div className="px-6 py-3.5 border-t border-white/[0.06] flex items-center justify-between">
+                <span className="text-white/15 text-[10px]">
                   This is a demo — yours will look like this
                 </span>
+                <div className="flex items-center gap-1">
+                  <div className="w-1.5 h-1.5 rounded-full bg-gold/30" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-gold/20" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-gold/10" />
+                </div>
               </div>
             </div>
           </div>

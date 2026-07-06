@@ -24,7 +24,7 @@ export default function MarkSheet() {
           </p>
         </div>
 
-        <div className="bg-white rounded-lg border border-ink-navy/[0.06] overflow-hidden">
+        <div className="bg-white rounded-2xl border border-ink-navy/[0.06] overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
@@ -47,32 +47,27 @@ export default function MarkSheet() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-ink-navy/[0.04]">
-                {TOPPERS.map((topper) => (
-                  <tr
-                    key={topper.rank}
-                    className={`group transition-colors ${
-                      topper.rank === 1 ? "bg-gold/[0.03]" : "hover:bg-paper/80"
-                    }`}
-                  >
+                {TOPPERS.map((t) => (
+                  <tr key={t.rank} className={`table-row ${t.rank === 1 ? "bg-gold/[0.03]" : ""}`}>
                     <td className="px-6 py-4">
-                      <span className={`text-sm font-bold ${topper.rank === 1 ? "text-gold" : "text-ink-navy"}`}>
-                        {String(topper.rank).padStart(2, "0")}
+                      <span className={`text-sm font-bold ${t.rank === 1 ? "text-gold" : "text-ink-navy"}`}>
+                        {String(t.rank).padStart(2, "0")}
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-slate font-medium text-sm">{topper.name}</span>
+                      <span className="text-slate font-medium text-sm">{t.name}</span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="font-semibold text-gold text-base">{topper.score}</span>
-                      <span className="text-slate-light/50 text-xs ml-0.5">/{topper.total}</span>
+                      <span className="font-semibold text-gold text-base">{t.score}</span>
+                      <span className="text-slate-light/40 text-xs ml-0.5">/{t.total}</span>
                     </td>
                     <td className="px-6 py-4 hidden sm:table-cell">
-                      <span className="text-slate-light text-sm">{topper.session}</span>
+                      <span className="text-slate-light text-sm">{t.session}</span>
                     </td>
                     <td className="px-6 py-4">
                       <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200/60">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                        {topper.status}
+                        {t.status}
                       </span>
                     </td>
                   </tr>

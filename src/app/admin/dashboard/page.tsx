@@ -34,147 +34,90 @@ export default function AdminDashboard() {
 
   const fetchAdmissions = useCallback(async () => {
     const token = localStorage.getItem("admin_token");
-    if (!token) {
-      router.push("/admin/login");
-      return;
-    }
-
+    if (!token) { router.push("/admin/login"); return; }
     try {
       const params = new URLSearchParams();
       if (statusFilter) params.set("status", statusFilter);
       if (paymentFilter) params.set("paymentMethod", paymentFilter);
-
       const res = await fetch(`/api/admin/admissions?${params}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      if (res.status === 401) {
-        localStorage.removeItem("admin_token");
-        router.push("/admin/login");
-        return;
-      }
-
+      if (res.status === 401) { localStorage.removeItem("admin_token"); router.push("/admin/login"); return; }
       const text = await res.text();
       try {
         const data = JSON.parse(text);
         setAdmissions(data.admissions || []);
-      } catch {
-        console.error("Non-JSON response:", text.slice(0, 100));
-      }
-    } catch {
-      console.error("Failed to fetch admissions");
-    } finally {
-      setLoading(false);
-    }
+      } catch { console.error("Non-JSON:", text.slice(0, 100)); }
+    } catch { console.error("Failed to fetch"); }
+    finally { setLoading(false); }
   }, [statusFilter, paymentFilter, router]);
 
-  useEffect(() => {
-    fetchAdmissions();
-  }, [fetchAdmissions]);
+  useEffect(() => { fetchAdmissions(); }, [fetchAdmissions]);
 
   async function updateStatus(id: string, status: "approved" | "rejected") {
     const token = localStorage.getItem("admin_token");
     if (!token) return;
-
     setUpdating(true);
     try {
       const res = await fetch(`/api/admin/admissions/${id}`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ status }),
       });
-
       if (res.ok) {
-        setAdmissions((prev) =>
-          prev.map((a) => (a._id === id ? { ...a, status } : a))
-        );
-        if (selected?._id === id) {
-          setSelected((prev) => (prev ? { ...prev, status } : null));
-        }
+        setAdmissions((p) => p.map((a) => (a._id === id ? { ...a, status } : a)));
+        if (selected?._id === id) setSelected((p) => p ? { ...p, status } : null);
       }
-    } catch (err) {
-      console.error("Failed to update status", err);
-    } finally {
-      setUpdating(false);
-    }
+    } finally { setUpdating(false); }
   }
 
-  function formatDate(date: string) {
-    return new Date(date).toLocaleDateString("en-PK", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
+  function formatDate(d: string) {
+    return new Date(d).toLocaleDateString("en-PK", { day: "numeric", month: "short", year: "numeric" });
   }
 
-  function statusBadge(status: string) {
-    const styles = {
-      pending: "bg-gold/10 text-gold border-gold/30",
-      approved: "bg-green-50 text-green-700 border-green-200",
-      rejected: "bg-stamp-red/10 text-stamp-red border-stamp-red/30",
+  function StatusBadge({ status }: { status: string }) {
+    const map: Record<string, { bg: string; text: string; border: string; dot: string }> = {
+      pending: { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200", dot: "bg-amber-500" },
+      approved: { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200", dot: "bg-emerald-500" },
+      rejected: { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", dot: "bg-red-500" },
     };
+    const s = map[status] || map.pending;
     return (
-      <span
-        className={`inline-flex items-center gap-1.5 font-mono text-xs font-medium px-2 py-0.5 rounded-sm border ${
-          styles[status as keyof typeof styles] || styles.pending
-        }`}
-      >
-        <span
-          className={`w-1.5 h-1.5 rounded-full ${
-            status === "approved"
-              ? "bg-green-500"
-              : status === "rejected"
-              ? "bg-stamp-red"
-              : "bg-gold"
-          }`}
-        />
+      <span className={`inline-flex items-center gap-1.5 text-[11px] font-semibold ${s.text} ${s.bg} px-2.5 py-1 rounded-full border ${s.border}`}>
+        <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />
         {status.charAt(0).toUpperCase() + status.slice(1)}
       </span>
     );
   }
 
   return (
-    <div className="min-h-[80vh] bg-paper py-8 sm:py-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <div className="min-h-[80vh] bg-paper">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 py-8 sm:py-12">
+        {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="font-display text-ink-navy text-2xl font-bold">
-              Applications
-            </h1>
-            <p className="text-slate-light text-sm font-mono mt-1">
+            <h1 className="font-display text-ink-navy text-2xl sm:text-3xl font-bold">Applications</h1>
+            <p className="text-slate-light text-sm mt-1">
               {admissions.length} total submission{admissions.length !== 1 ? "s" : ""}
             </p>
           </div>
           <button
-            onClick={() => {
-              localStorage.removeItem("admin_token");
-              router.push("/admin/login");
-            }}
-            className="text-slate-light text-xs font-mono border border-paper bg-white px-3 py-1.5 rounded hover:border-gold/30 transition-colors"
+            onClick={() => { localStorage.removeItem("admin_token"); router.push("/admin/login"); }}
+            className="text-slate-light text-sm font-medium border border-ink-navy/10 bg-white px-4 py-2 rounded-xl hover:border-ink-navy/20 hover:bg-ink-navy/[0.02] transition-all"
           >
             Sign Out
           </button>
         </div>
 
+        {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="border border-paper bg-white rounded-sm px-3 py-2 text-sm text-slate font-body focus:outline-none focus:border-gold transition-colors"
-          >
+          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="form-input sm:w-48">
             <option value="">All Statuses</option>
             <option value="pending">Pending</option>
             <option value="approved">Approved</option>
             <option value="rejected">Rejected</option>
           </select>
-          <select
-            value={paymentFilter}
-            onChange={(e) => setPaymentFilter(e.target.value)}
-            className="border border-paper bg-white rounded-sm px-3 py-2 text-sm text-slate font-body focus:outline-none focus:border-gold transition-colors"
-          >
+          <select value={paymentFilter} onChange={(e) => setPaymentFilter(e.target.value)} className="form-input sm:w-48">
             <option value="">All Payment Methods</option>
             <option value="EasyPaisa">EasyPaisa</option>
             <option value="JazzCash">JazzCash</option>
@@ -183,69 +126,51 @@ export default function AdminDashboard() {
           </select>
         </div>
 
+        {/* Table */}
         {loading ? (
-          <div className="bg-white border border-paper rounded-sm p-12 text-center">
-            <div className="w-6 h-6 border-2 border-gold border-t-transparent rounded-full animate-spin mx-auto" />
-            <p className="text-slate-light text-sm font-mono mt-3">Loading...</p>
+          <div className="bg-white rounded-2xl border border-ink-navy/[0.06] p-12 text-center">
+            <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin mx-auto" />
+            <p className="text-slate-light text-sm mt-3">Loading applications...</p>
           </div>
         ) : admissions.length === 0 ? (
-          <div className="bg-white border border-paper rounded-sm p-12 text-center">
-            <div className="w-16 h-16 border border-paper rounded-sm mx-auto flex items-center justify-center mb-4">
-              <svg className="w-8 h-8 text-slate-light/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="bg-white rounded-2xl border border-ink-navy/[0.06] p-12 text-center">
+            <div className="w-20 h-20 bg-paper rounded-2xl mx-auto flex items-center justify-center mb-4">
+              <svg className="w-10 h-10 text-ink-navy/15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
             <h3 className="font-display text-ink-navy text-lg font-semibold mb-1">No applications yet</h3>
-            <p className="text-slate-light text-sm">
-              Applications will appear here once students submit the admission form.
-            </p>
+            <p className="text-slate-light text-sm max-w-xs mx-auto">Applications will appear here once students submit the admission form.</p>
           </div>
         ) : (
-          <div className="bg-white border border-paper rounded-sm overflow-hidden">
+          <div className="bg-white rounded-2xl border border-ink-navy/[0.06] overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-ink-navy">
-                    <th className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/70 px-4 py-3 text-left font-medium">
-                      Name
-                    </th>
-                    <th className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/70 px-4 py-3 text-left font-medium">
-                      City
-                    </th>
-                    <th className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/70 px-4 py-3 text-left font-medium">
-                      Payment
-                    </th>
-                    <th className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/70 px-4 py-3 text-left font-medium">
-                      Status
-                    </th>
-                    <th className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/70 px-4 py-3 text-left font-medium">
-                      Date
-                    </th>
+                    <th className="text-left text-[11px] font-semibold tracking-wider uppercase text-white/40 px-6 py-4">Name</th>
+                    <th className="text-left text-[11px] font-semibold tracking-wider uppercase text-white/40 px-6 py-4 hidden sm:table-cell">City</th>
+                    <th className="text-left text-[11px] font-semibold tracking-wider uppercase text-white/40 px-6 py-4 hidden md:table-cell">Payment</th>
+                    <th className="text-left text-[11px] font-semibold tracking-wider uppercase text-white/40 px-6 py-4">Status</th>
+                    <th className="text-left text-[11px] font-semibold tracking-wider uppercase text-white/40 px-6 py-4 hidden lg:table-cell">Date</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {admissions.map((a, i) => (
-                    <tr
-                      key={a._id}
-                      onClick={() => setSelected(a)}
-                      className={`border-t border-paper cursor-pointer transition-colors ${
-                        i % 2 === 0 ? "hover:bg-gold/5" : "hover:bg-gold/5"
-                      }`}
-                    >
-                      <td className="px-4 py-3">
+                <tbody className="divide-y divide-ink-navy/[0.04]">
+                  {admissions.map((a) => (
+                    <tr key={a._id} onClick={() => setSelected(a)} className="table-row cursor-pointer">
+                      <td className="px-6 py-4">
                         <span className="text-slate font-medium">{a.studentName}</span>
+                        <span className="block text-slate-light text-xs sm:hidden mt-0.5">{a.city}</span>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-6 py-4 hidden sm:table-cell">
                         <span className="text-slate-light text-sm">{a.city}</span>
                       </td>
-                      <td className="px-4 py-3">
-                        <span className="font-mono text-xs text-slate">{a.paymentMethod}</span>
+                      <td className="px-6 py-4 hidden md:table-cell">
+                        <span className="text-slate text-sm">{a.paymentMethod}</span>
                       </td>
-                      <td className="px-4 py-3">{statusBadge(a.status)}</td>
-                      <td className="px-4 py-3">
-                        <span className="font-mono text-xs text-slate-light">
-                          {formatDate(a.createdAt)}
-                        </span>
+                      <td className="px-6 py-4"><StatusBadge status={a.status} /></td>
+                      <td className="px-6 py-4 hidden lg:table-cell">
+                        <span className="text-slate-light text-sm">{formatDate(a.createdAt)}</span>
                       </td>
                     </tr>
                   ))}
@@ -255,27 +180,20 @@ export default function AdminDashboard() {
           </div>
         )}
 
+        {/* Detail Modal */}
         {selected && (
-          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setSelected(null)}>
-            <div
-              className="bg-white rounded-sm w-full max-w-lg max-h-[90vh] overflow-y-auto border border-paper"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="border-b border-paper px-5 py-4 flex items-center justify-between">
-                <h2 className="font-display text-ink-navy text-lg font-bold">
-                  Application Details
-                </h2>
-                <button
-                  onClick={() => setSelected(null)}
-                  className="text-slate-light hover:text-slate p-1"
-                >
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setSelected(null)}>
+            <div className="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl animate-fade-up" onClick={(e) => e.stopPropagation()}>
+              <div className="sticky top-0 bg-white border-b border-ink-navy/[0.06] px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
+                <h2 className="font-display text-ink-navy text-lg font-bold">Application Details</h2>
+                <button onClick={() => setSelected(null)} className="text-slate-light hover:text-slate p-1 rounded-lg hover:bg-paper transition-colors">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
 
-              <div className="px-5 py-5 space-y-4">
+              <div className="px-6 py-5 space-y-4">
                 {[
                   ["Student Name", selected.studentName],
                   ["Email", selected.email],
@@ -290,47 +208,31 @@ export default function AdminDashboard() {
                   ["Address", selected.address],
                   ["City", selected.city],
                   ["Payment Method", selected.paymentMethod],
-                  ["Status", selected.status],
+                  ["Status", selected.status, true],
                   ["Applied On", formatDate(selected.createdAt)],
-                ].map(([label, value]) => (
-                  <div key={label as string} className="flex flex-col gap-0.5">
-                    <span className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/60">
-                      {label}
-                    </span>
-                    <span className="text-sm text-slate font-body">
-                      {label === "Status" ? statusBadge(value as string) : (value as string)}
-                    </span>
+                ].map(([label, value, isStatus]) => (
+                  <div key={label as string} className="flex flex-col gap-1">
+                    <span className="text-slate-light/60 text-[10px] font-semibold tracking-wider uppercase">{label as string}</span>
+                    {isStatus ? <StatusBadge status={value as string} /> : <span className="text-sm text-slate">{value as string}</span>}
                   </div>
                 ))}
 
                 <div className="pt-2">
-                  <span className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/60 block mb-2">
-                    Payment Proof
-                  </span>
-                  <a href={selected.paymentProofUrl} target="_blank" rel="noopener noreferrer">
-                    <img
-                      src={selected.paymentProofUrl}
-                      alt="Payment proof"
-                      className="w-full max-w-xs border border-paper rounded-sm"
-                    />
+                  <span className="text-slate-light/60 text-[10px] font-semibold tracking-wider uppercase block mb-2">Payment Proof</span>
+                  <a href={selected.paymentProofUrl} target="_blank" rel="noopener noreferrer" className="block">
+                    <img src={selected.paymentProofUrl} alt="Payment proof" className="w-full max-w-xs rounded-xl border border-ink-navy/[0.06] hover:border-gold/30 transition-colors" />
                   </a>
                 </div>
               </div>
 
-              <div className="border-t border-paper px-5 py-4 flex gap-3">
-                <button
-                  onClick={() => updateStatus(selected._id, "approved")}
-                  disabled={updating || selected.status === "approved"}
-                  className="flex-1 bg-green-600 text-white font-mono text-xs font-medium py-2.5 rounded-sm hover:bg-green-700 transition-colors disabled:opacity-50"
-                >
-                  Approve
+              <div className="border-t border-ink-navy/[0.06] px-6 py-4 flex gap-3">
+                <button onClick={() => updateStatus(selected._id, "approved")} disabled={updating || selected.status === "approved"}
+                  className="flex-1 bg-emerald-600 text-white text-sm font-semibold py-3 rounded-xl hover:bg-emerald-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                  {updating ? "Updating..." : "Approve"}
                 </button>
-                <button
-                  onClick={() => updateStatus(selected._id, "rejected")}
-                  disabled={updating || selected.status === "rejected"}
-                  className="flex-1 bg-stamp-red text-white font-mono text-xs font-medium py-2.5 rounded-sm hover:bg-stamp-red/90 transition-colors disabled:opacity-50"
-                >
-                  Reject
+                <button onClick={() => updateStatus(selected._id, "rejected")} disabled={updating || selected.status === "rejected"}
+                  className="flex-1 bg-stamp-red text-white text-sm font-semibold py-3 rounded-xl hover:bg-stamp-red/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                  {updating ? "Updating..." : "Reject"}
                 </button>
               </div>
             </div>
