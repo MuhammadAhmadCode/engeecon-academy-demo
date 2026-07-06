@@ -35,7 +35,7 @@ export default function StepsSection() {
           {STEPS.map((s) => (
             <div key={s.number} className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-8 hover:bg-white/[0.07] hover:border-white/[0.1] transition-all duration-300 group">
               <span className="text-gold/25 text-5xl font-bold font-display block mb-6 group-hover:text-gold/40 transition-colors">{s.number}</span>
-              <h3 className="text-white text-lg font-semibold mb-2">{s.title}</h3>
+              <h3 className="font-display text-white text-lg font-semibold mb-2">{s.title}</h3>
               <p className="text-white/35 text-sm leading-relaxed">{s.description}</p>
             </div>
           ))}
