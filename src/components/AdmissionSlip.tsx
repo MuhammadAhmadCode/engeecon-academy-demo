@@ -30,7 +30,7 @@ export default function AdmissionSlip() {
 
   return (
     <section className="hero-bg relative overflow-hidden min-h-[85vh] flex items-center">
-      {/* subtle grid pattern */}
+      {/* subtle grid pattern on top of gradient */}
       <div className="absolute inset-0 opacity-[0.015]" style={{
         backgroundImage: `linear-gradient(rgba(201,162,39,1) 1px, transparent 1px), linear-gradient(90deg, rgba(201,162,39,1) 1px, transparent 1px)`,
         backgroundSize: '80px 80px',
@@ -83,10 +83,17 @@ export default function AdmissionSlip() {
 
           {/* Right: Slip Card */}
           <div
-            className="w-full max-w-[380px] lg:max-w-none lg:w-[400px] shrink-0 animate-fade-up"
+            className="w-full max-w-[380px] lg:max-w-none lg:w-[400px] shrink-0 animate-fade-up relative"
             style={{ animationDelay: '0.4s' }}
           >
-            <div className="slip-card rounded-2xl overflow-hidden backdrop-blur-md">
+            {/* Gold radial glow behind card */}
+            <div
+              className="absolute inset-0 -inset-x-12 -inset-y-12 pointer-events-none"
+              style={{
+                background: 'radial-gradient(ellipse at center, rgba(201,162,39,0.06) 0%, transparent 70%)',
+              }}
+            />
+            <div className="slip-card rounded-2xl overflow-hidden backdrop-blur-md relative">
               {/* Header */}
               <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
                 <div className="flex items-center gap-3">
