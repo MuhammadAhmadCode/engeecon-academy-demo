@@ -10,74 +10,67 @@ export default function MarkSheet() {
   return (
     <section className="py-20 sm:py-28">
       <div className="max-w-7xl mx-auto px-6 sm:px-10">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-10">
           <div>
-            <p className="font-mono text-gold text-[11px] tracking-[0.25em] uppercase mb-3 font-medium">
+            <p className="text-gold text-xs font-semibold tracking-[0.2em] uppercase mb-2">
               Results
             </p>
-            <h2 className="font-display text-ink-navy text-3xl sm:text-4xl font-bold leading-tight">
-              Top scorers
-              <span className="text-gold">.</span>
+            <h2 className="font-display text-ink-navy text-3xl sm:text-4xl font-bold">
+              Top scorers<span className="text-gold">.</span>
             </h2>
           </div>
-          <p className="font-mono text-slate-light text-xs">
-            Spring 2026 — 340+ students
+          <p className="text-slate-light text-sm">
+            Spring 2026 &middot; 340+ students
           </p>
         </div>
 
-        <div className="bg-white rounded-sm border border-ink-navy/5 overflow-hidden shadow-sm">
+        <div className="bg-white rounded-lg border border-ink-navy/[0.06] overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full">
               <thead>
                 <tr className="bg-ink-navy">
-                  <th className="font-mono text-[10px] tracking-[0.2em] uppercase text-gold/60 px-6 py-4 text-left font-medium w-20">
+                  <th className="text-left text-[11px] font-semibold tracking-wider uppercase text-white/40 px-6 py-4 w-20">
                     Rank
                   </th>
-                  <th className="font-mono text-[10px] tracking-[0.2em] uppercase text-gold/60 px-6 py-4 text-left font-medium">
+                  <th className="text-left text-[11px] font-semibold tracking-wider uppercase text-white/40 px-6 py-4">
                     Student
                   </th>
-                  <th className="font-mono text-[10px] tracking-[0.2em] uppercase text-gold/60 px-6 py-4 text-left font-medium w-32">
+                  <th className="text-left text-[11px] font-semibold tracking-wider uppercase text-white/40 px-6 py-4 w-32">
                     Score
                   </th>
-                  <th className="font-mono text-[10px] tracking-[0.2em] uppercase text-gold/60 px-6 py-4 text-left font-medium w-36">
+                  <th className="text-left text-[11px] font-semibold tracking-wider uppercase text-white/40 px-6 py-4 w-36 hidden sm:table-cell">
                     Session
                   </th>
-                  <th className="font-mono text-[10px] tracking-[0.2em] uppercase text-gold/60 px-6 py-4 text-left font-medium w-32">
+                  <th className="text-left text-[11px] font-semibold tracking-wider uppercase text-white/40 px-6 py-4 w-28">
                     Status
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                {TOPPERS.map((topper, i) => (
+              <tbody className="divide-y divide-ink-navy/[0.04]">
+                {TOPPERS.map((topper) => (
                   <tr
                     key={topper.rank}
-                    className={`border-t border-ink-navy/5 transition-colors ${
-                      i === 0 ? "bg-gold/[0.04]" : "hover:bg-paper"
+                    className={`group transition-colors ${
+                      topper.rank === 1 ? "bg-gold/[0.03]" : "hover:bg-paper/80"
                     }`}
                   >
                     <td className="px-6 py-4">
-                      <span className={`font-mono font-semibold text-sm ${i === 0 ? "text-gold" : "text-ink-navy"}`}>
+                      <span className={`text-sm font-bold ${topper.rank === 1 ? "text-gold" : "text-ink-navy"}`}>
                         {String(topper.rank).padStart(2, "0")}
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-slate font-medium">{topper.name}</span>
+                      <span className="text-slate font-medium text-sm">{topper.name}</span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="font-mono text-gold font-bold text-base">
-                        {topper.score}
-                      </span>
-                      <span className="text-slate-light/50 font-mono text-xs ml-0.5">
-                        /{topper.total}
-                      </span>
+                      <span className="font-semibold text-gold text-base">{topper.score}</span>
+                      <span className="text-slate-light/50 text-xs ml-0.5">/{topper.total}</span>
+                    </td>
+                    <td className="px-6 py-4 hidden sm:table-cell">
+                      <span className="text-slate-light text-sm">{topper.session}</span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="font-mono text-slate-light text-xs">
-                        {topper.session}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="inline-flex items-center gap-1.5 font-mono text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-sm border border-emerald-200/60">
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200/60">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                         {topper.status}
                       </span>

@@ -7,38 +7,32 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="bg-ink-navy sticky top-0 z-50">
+    <header className="bg-ink-navy sticky top-0 z-50 border-b border-white/[0.06]">
       <nav className="max-w-7xl mx-auto px-6 sm:px-10 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 border-2 border-gold/70 rounded-sm flex items-center justify-center group-hover:border-gold transition-colors">
-            <span className="font-display text-gold text-sm font-bold">E</span>
+        <Link href="/" className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-gold/10 border border-gold/25 rounded flex items-center justify-center">
+            <span className="font-display text-gold text-xs font-bold">E</span>
           </div>
           <div className="flex flex-col leading-none">
-            <span className="font-display text-white text-lg font-semibold tracking-tight">
+            <span className="font-display text-white text-base font-semibold tracking-tight">
               Engeecon
             </span>
-            <span className="font-mono text-gold/50 text-[8px] tracking-[0.3em] uppercase mt-0.5 hidden sm:block">
+            <span className="text-white/30 text-[9px] font-semibold tracking-[0.25em] uppercase mt-0.5 hidden sm:block">
               Academy
             </span>
           </div>
         </Link>
 
-        <div className="hidden md:flex items-center gap-10">
-          <Link
-            href="/"
-            className="text-white/60 hover:text-white text-sm font-medium transition-colors"
-          >
+        <div className="hidden md:flex items-center gap-8">
+          <Link href="/" className="text-white/50 hover:text-white text-sm font-medium transition-colors">
             Home
           </Link>
-          <Link
-            href="/admission"
-            className="text-white/60 hover:text-white text-sm font-medium transition-colors"
-          >
+          <Link href="/admission" className="text-white/50 hover:text-white text-sm font-medium transition-colors">
             Admission
           </Link>
           <Link
             href="/admin/login"
-            className="text-sm font-medium border border-gold/30 text-gold/80 px-5 py-1.5 rounded-sm hover:bg-gold/10 hover:border-gold/50 hover:text-gold transition-all"
+            className="text-sm font-medium border border-gold/25 text-gold/70 px-5 py-1.5 rounded hover:bg-gold/10 hover:border-gold/40 hover:text-gold transition-all"
           >
             Admin
           </Link>
@@ -60,25 +54,17 @@ export default function Navbar() {
       </nav>
 
       {mobileOpen && (
-        <div className="md:hidden bg-ink-navy-light border-t border-white/5 px-6 py-5 space-y-4">
-          <Link
-            href="/"
-            onClick={() => setMobileOpen(false)}
-            className="block text-white/70 hover:text-white text-sm font-medium"
-          >
+        <div className="md:hidden bg-ink-navy-light border-t border-white/[0.06] px-6 py-5 space-y-4">
+          <Link href="/" onClick={() => setMobileOpen(false)} className="block text-white/60 hover:text-white text-sm font-medium">
             Home
           </Link>
-          <Link
-            href="/admission"
-            onClick={() => setMobileOpen(false)}
-            className="block text-white/70 hover:text-white text-sm font-medium"
-          >
+          <Link href="/admission" onClick={() => setMobileOpen(false)} className="block text-white/60 hover:text-white text-sm font-medium">
             Admission
           </Link>
           <Link
             href="/admin/login"
             onClick={() => setMobileOpen(false)}
-            className="block text-sm font-medium border border-gold/30 text-gold/80 px-5 py-2 rounded-sm text-center hover:bg-gold/10"
+            className="block text-sm font-medium border border-gold/25 text-gold/70 px-5 py-2 rounded text-center hover:bg-gold/10"
           >
             Admin
           </Link>

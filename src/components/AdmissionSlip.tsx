@@ -32,28 +32,28 @@ export default function AdmissionSlip() {
   }, [prefersReduced]);
 
   return (
-    <section className="bg-ink-navy relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.03]" style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A227' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-      }} />
+    <section className="relative bg-ink-navy overflow-hidden">
+      <div className="hero-gradient absolute inset-0" />
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 py-20 sm:py-28 lg:py-36 relative">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+      <div className="relative max-w-7xl mx-auto px-6 sm:px-10 pt-16 pb-20 sm:pt-24 sm:pb-28 lg:pt-32 lg:pb-36">
+        <div className="flex flex-col lg:flex-row items-center gap-14 lg:gap-20">
+
+          {/* Left: Copy */}
           <div className="flex-1 min-w-0 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 border border-gold/20 rounded-sm px-3 py-1 mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
-              <span className="font-mono text-gold/60 text-[10px] tracking-[0.25em] uppercase">
+            <div className="inline-flex items-center gap-2.5 bg-white/[0.06] border border-white/10 rounded-full px-4 py-1.5 mb-8">
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <span className="text-white/70 text-xs font-medium tracking-wide">
                 Admissions Open — July 2026
               </span>
             </div>
 
-            <h1 className="font-display text-white text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6">
+            <h1 className="font-display text-white text-[2.5rem] sm:text-5xl lg:text-[3.5rem] font-bold leading-[1.08] mb-6 tracking-tight">
               Your admission
               <br />
               starts here<span className="text-gold">.</span>
             </h1>
 
-            <p className="text-white/50 text-lg sm:text-xl leading-relaxed mb-10 max-w-lg mx-auto lg:mx-0">
+            <p className="text-white/45 text-lg sm:text-xl leading-relaxed mb-10 max-w-md mx-auto lg:mx-0">
               Apply online in 5 minutes. Track your application status in real time.
               No more WhatsApp follow-ups.
             </p>
@@ -61,77 +61,70 @@ export default function AdmissionSlip() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Link
                 href="/admission"
-                className="group inline-flex items-center justify-center gap-3 bg-gold text-ink-navy font-mono text-sm font-semibold px-8 py-4 rounded-sm hover:bg-gold-light transition-all"
+                className="group inline-flex items-center justify-center gap-3 bg-gold text-ink-navy font-semibold text-sm px-8 py-3.5 rounded hover:bg-gold-light transition-all shadow-lg shadow-gold/20"
               >
                 Apply Now
                 <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
               <Link
                 href="/admission"
-                className="inline-flex items-center justify-center gap-2 border border-white/15 text-white/60 font-mono text-sm px-8 py-4 rounded-sm hover:border-white/30 hover:text-white/80 transition-all"
+                className="inline-flex items-center justify-center gap-2 border border-white/15 text-white/60 text-sm px-8 py-3.5 rounded hover:border-white/25 hover:text-white/80 transition-all"
               >
                 Check Application Status
               </Link>
             </div>
           </div>
 
-          <div className="w-full lg:w-[400px] shrink-0">
-            <div className="border border-gold/30 rounded-sm bg-ink-navy/60 backdrop-blur-sm overflow-hidden shadow-2xl shadow-black/20">
-              <div className="border-b border-gold/20 px-6 py-4 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-7 h-7 border border-gold/40 rounded-sm flex items-center justify-center">
-                    <span className="font-display text-gold text-[10px] font-bold">E</span>
+          {/* Right: Admission Slip Card */}
+          <div className="w-full max-w-[380px] lg:max-w-none lg:w-[380px] shrink-0">
+            <div className="bg-white/[0.04] backdrop-blur-md card-glow rounded-lg overflow-hidden">
+              {/* Card Header */}
+              <div className="flex items-center justify-between px-6 py-3.5 border-b border-white/[0.08] bg-white/[0.02]">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-6 h-6 bg-gold/15 border border-gold/30 rounded flex items-center justify-center">
+                    <span className="font-display text-gold text-[9px] font-bold">E</span>
                   </div>
-                  <span className="font-mono text-gold/70 text-[9px] tracking-[0.3em] uppercase">
+                  <span className="text-white/50 text-[11px] font-semibold tracking-widest uppercase">
                     Admission Slip
                   </span>
                 </div>
-                <span className="font-mono text-gold/30 text-[10px]">2026</span>
+                <span className="text-white/25 text-[11px] font-medium">2026</span>
               </div>
 
-              <div className="px-6 py-5">
+              {/* Card Fields */}
+              <div className="px-6 py-2">
                 {FIELDS.map((field, i) => (
                   <div
                     key={field.label}
-                    className={`flex flex-col gap-1.5 py-3.5 ${
-                      i < FIELDS.length - 1 ? "slip-line" : ""
-                    }`}
+                    className={`py-3.5 ${i < FIELDS.length - 1 ? "slip-line" : ""}`}
                     style={{
                       opacity: visibleFields > i ? 1 : 0,
-                      transform: visibleFields > i ? "translateY(0)" : "translateY(10px)",
+                      transform: visibleFields > i ? "translateY(0)" : "translateY(8px)",
                       transition: prefersReduced ? "none" : "all 0.5s cubic-bezier(0.22, 1, 0.36, 1)",
                     }}
                   >
-                    <span className="font-mono text-gold/40 text-[9px] tracking-[0.25em] uppercase">
+                    <span className="text-white/30 text-[10px] font-semibold tracking-[0.2em] uppercase block mb-1">
                       {field.label}
                     </span>
                     {field.isStatus ? (
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-gold text-sm font-medium">
-                          {field.value}
-                        </span>
-                        <span className="inline-block w-2 h-2 rounded-full bg-gold animate-pulse" />
+                        <span className="text-gold text-sm font-semibold">{field.value}</span>
+                        <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
                       </div>
                     ) : (
-                      <span className="font-mono text-white text-sm font-medium">
-                        {field.value}
-                      </span>
+                      <span className="text-white text-sm font-medium">{field.value}</span>
                     )}
                   </div>
                 ))}
               </div>
 
-              <div className="border-t border-gold/15 px-6 py-3.5 flex items-center justify-between bg-gold/[0.03]">
-                <span className="font-mono text-white/25 text-[9px]">
+              {/* Card Footer */}
+              <div className="px-6 py-3 border-t border-white/[0.06] bg-white/[0.02]">
+                <span className="text-white/20 text-[10px]">
                   This is a demo — yours will look like this
                 </span>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-1 h-1 rounded-full bg-gold/30" />
-                  <div className="w-1 h-1 rounded-full bg-gold/20" />
-                  <div className="w-1 h-1 rounded-full bg-gold/10" />
-                </div>
               </div>
             </div>
           </div>

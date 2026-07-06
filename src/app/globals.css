@@ -2,7 +2,7 @@
 
 @theme inline {
   --color-ink-navy: #0B1D3A;
-  --color-ink-navy-light: #122B52;
+  --color-ink-navy-light: #162D54;
   --color-paper: #EDEFF2;
   --color-gold: #C9A227;
   --color-gold-dark: #A88520;
@@ -17,23 +17,13 @@
   --font-mono: var(--font-ibm-plex-mono), monospace;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 html {
   scroll-behavior: smooth;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -44,7 +34,8 @@ body {
   background-color: var(--color-paper);
   color: var(--color-slate);
   font-family: var(--font-inter), sans-serif;
-  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
@@ -57,17 +48,14 @@ body {
   outline-offset: 2px;
 }
 
-@keyframes slip-fade {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 .slip-line {
-  border-bottom: 1px solid rgba(201, 162, 39, 0.25);
+  border-bottom: 1px solid rgba(201, 162, 39, 0.2);
 }
 
-.section-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-ink-navy) 20%, var(--color-ink-navy) 80%, transparent);
-  opacity: 0.1;
+.hero-gradient {
+  background: radial-gradient(ellipse at 70% 50%, rgba(201, 162, 39, 0.06) 0%, transparent 60%);
+}
+
+.card-glow {
+  box-shadow: 0 0 0 1px rgba(201, 162, 39, 0.15), 0 25px 50px -12px rgba(0, 0, 0, 0.4);
 }
