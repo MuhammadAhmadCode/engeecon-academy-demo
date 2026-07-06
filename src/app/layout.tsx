@@ -34,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${fraunces.variable} ${ibmPlexMono.variable} h-full`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${fraunces.variable} ${ibmPlexMono.variable} h-full`}>
       <body className="min-h-full flex flex-col antialiased">
         <Navbar />
         <main className="flex-1">{children}</main>
