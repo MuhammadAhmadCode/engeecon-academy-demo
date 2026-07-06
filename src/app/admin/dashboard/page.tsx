@@ -76,15 +76,9 @@ export default function AdminDashboard() {
   }
 
   function StatusBadge({ status }: { status: string }) {
-    const map: Record<string, { bg: string; text: string; border: string; dot: string }> = {
-      pending: { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200", dot: "bg-amber-500" },
-      approved: { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200", dot: "bg-emerald-500" },
-      rejected: { bg: "bg-red-50", text: "text-red-700", border: "border-red-200", dot: "bg-red-500" },
-    };
-    const s = map[status] || map.pending;
     return (
-      <span className={`inline-flex items-center gap-1.5 text-[11px] font-semibold ${s.text} ${s.bg} px-2.5 py-1 rounded-full border ${s.border}`}>
-        <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />
+      <span className={`status-badge status-${status}`}>
+        <span className="status-dot" />
         {status.charAt(0).toUpperCase() + status.slice(1)}
       </span>
     );
@@ -227,12 +221,12 @@ export default function AdminDashboard() {
 
               <div className="border-t border-ink-navy/[0.06] px-6 py-4 flex gap-3">
                 <button onClick={() => updateStatus(selected._id, "approved")} disabled={updating || selected.status === "approved"}
-                  className="flex-1 bg-emerald-600 text-white text-sm font-semibold py-3 rounded-xl hover:bg-emerald-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-                  {updating ? "Updating..." : "Approve"}
+                  className="flex-1 bg-emerald-600 text-white text-sm font-semibold py-3 rounded-xl hover:bg-emerald-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                  {updating ? <><span className="spinner spinner-white" /> Updating...</> : "Approve"}
                 </button>
                 <button onClick={() => updateStatus(selected._id, "rejected")} disabled={updating || selected.status === "rejected"}
-                  className="flex-1 bg-stamp-red text-white text-sm font-semibold py-3 rounded-xl hover:bg-stamp-red/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-                  {updating ? "Updating..." : "Reject"}
+                  className="flex-1 bg-stamp-red text-white text-sm font-semibold py-3 rounded-xl hover:bg-stamp-red/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                  {updating ? <><span className="spinner spinner-white" /> Updating...</> : "Reject"}
                 </button>
               </div>
             </div>

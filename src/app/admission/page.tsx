@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 const SESSION_OPTIONS = [
   "July 2026 — Morning",
@@ -116,7 +117,7 @@ export default function AdmissionPage() {
           </div>
 
           <div className="mt-8 text-center">
-            <a href="/" className="text-ink-navy text-sm font-medium hover:text-gold transition-colors">Back to Home</a>
+            <Link href="/" className="text-ink-navy text-sm font-medium hover:text-gold transition-colors">Back to Home</Link>
           </div>
         </div>
       </div>
@@ -186,7 +187,14 @@ export default function AdmissionPage() {
           )}
 
           <button type="submit" disabled={submitting} className="btn-primary w-full text-center">
-            {submitting ? "Processing..." : "Apply Now"}
+            {submitting ? (
+              <>
+                <span className="spinner" />
+                Processing...
+              </>
+            ) : (
+              "Apply Now"
+            )}
           </button>
 
           <p className="text-center text-slate-light/60 text-xs">

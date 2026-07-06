@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useScrollReveal } from "@/lib/useScrollReveal";
 
 const STATS = [
   { value: 340, suffix: "+", label: "Students Enrolled" },
@@ -18,7 +19,7 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setStarted(true); },
+      ([entry]) => { if (entry.isIntersecting) { setStarted(true); observer.disconnect(); } },
       { threshold: 0.5 }
     );
     observer.observe(el);
@@ -39,14 +40,20 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
     return () => clearInterval(timer);
   }, [started, value]);
 
-  return <span ref={ref} className="font-display text-gold text-4xl sm:text-5xl font-bold tracking-tight">{count}{suffix}</span>;
+  return (
+    <span ref={ref} className="font-display text-gold text-4xl sm:text-5xl font-bold tracking-tight">
+      {count}{suffix}
+    </span>
+  );
 }
 
 export default function StatsBar() {
+  const ref = useScrollReveal();
+
   return (
     <section className="bg-white border-b border-ink-navy/[0.04]">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 py-16">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0">
+        <div ref={ref} className="reveal-stagger grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0">
           {STATS.map((stat, i) => (
             <div
               key={stat.label}

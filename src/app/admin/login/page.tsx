@@ -74,7 +74,14 @@ export default function AdminLoginPage() {
           )}
 
           <button type="submit" disabled={loading} className="btn-primary w-full text-center">
-            {loading ? "Signing in..." : "Sign In"}
+            {loading ? (
+              <>
+                <span className="spinner" />
+                Signing in...
+              </>
+            ) : (
+              "Sign In"
+            )}
           </button>
         </form>
       </div>
