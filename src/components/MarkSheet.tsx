@@ -9,7 +9,7 @@ const TOPPERS = [
 export default function MarkSheet() {
   return (
     <section className="py-16 sm:py-20">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="mb-8">
           <p className="font-mono text-gold text-xs tracking-[0.2em] uppercase mb-2">
             Results
@@ -24,19 +24,19 @@ export default function MarkSheet() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-ink-navy">
-                  <th className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/70 px-4 py-3 text-left font-medium">
+                  <th className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/70 px-5 py-3 text-left font-medium w-16">
                     Rank
                   </th>
-                  <th className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/70 px-4 py-3 text-left font-medium">
+                  <th className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/70 px-5 py-3 text-left font-medium">
                     Name
                   </th>
-                  <th className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/70 px-4 py-3 text-left font-medium">
+                  <th className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/70 px-5 py-3 text-left font-medium w-28">
                     Score
                   </th>
-                  <th className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/70 px-4 py-3 text-left font-medium">
+                  <th className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/70 px-5 py-3 text-left font-medium w-36">
                     Session
                   </th>
-                  <th className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/70 px-4 py-3 text-left font-medium">
+                  <th className="font-mono text-[10px] tracking-[0.15em] uppercase text-gold/70 px-5 py-3 text-left font-medium w-28">
                     Status
                   </th>
                 </tr>
@@ -46,18 +46,18 @@ export default function MarkSheet() {
                   <tr
                     key={topper.rank}
                     className={`border-t border-paper ${
-                      i === 0 ? "bg-gold/5" : "hover:bg-paper/50"
+                      i === 0 ? "bg-gold/5" : "hover:bg-paper/60"
                     } transition-colors`}
                   >
-                    <td className="px-4 py-3">
+                    <td className="px-5 py-3">
                       <span className="font-mono text-ink-navy font-semibold text-sm">
                         {topper.rank}
                       </span>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-5 py-3">
                       <span className="text-slate font-medium">{topper.name}</span>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-5 py-3">
                       <span className="font-mono text-gold font-semibold">
                         {topper.score}
                       </span>
@@ -65,12 +65,12 @@ export default function MarkSheet() {
                         /{topper.total}
                       </span>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-5 py-3">
                       <span className="font-mono text-slate-light text-xs">
                         {topper.session}
                       </span>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-5 py-3">
                       <span className="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-green-700 bg-green-50 px-2 py-0.5 rounded-sm border border-green-200">
                         <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
                         {topper.status}

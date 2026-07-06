@@ -33,10 +33,10 @@ export default function AdmissionSlip() {
   }, [prefersReduced]);
 
   return (
-    <section className="bg-ink-navy py-20 sm:py-28 lg:py-36">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center gap-12 lg:gap-16">
-          <div className="flex-1 max-w-xl">
+    <section className="bg-ink-navy py-16 sm:py-24 lg:py-32">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-14">
+          <div className="flex-1 min-w-0">
             <p className="font-mono text-gold/70 text-xs tracking-[0.2em] uppercase mb-4">
               Engeecon Academy — MDCAT 2026
             </p>
@@ -45,7 +45,7 @@ export default function AdmissionSlip() {
               <br />
               starts here<span className="text-gold">.</span>
             </h1>
-            <p className="text-slate-light text-base sm:text-lg leading-relaxed mb-8">
+            <p className="text-slate-light text-base sm:text-lg leading-relaxed mb-8 max-w-md">
               Apply online in 5 minutes. Track your application status in real time.
               No more WhatsApp follow-ups.
             </p>
@@ -68,60 +68,58 @@ export default function AdmissionSlip() {
             </div>
           </div>
 
-          <div className="w-full lg:w-auto flex justify-center lg:justify-end">
-            <div className="w-full max-w-md">
-              <div className="border-2 border-gold/60 rounded-sm bg-ink-navy/80 p-0 overflow-hidden">
-                <div className="border-b border-gold/30 px-5 py-3 flex items-center justify-between">
-                  <span className="font-mono text-gold text-[10px] tracking-[0.25em] uppercase">
-                    Admission Slip
-                  </span>
-                  <span className="font-mono text-gold/50 text-[10px]">
-                    2026
-                  </span>
-                </div>
+          <div className="w-full lg:w-[380px] shrink-0">
+            <div className="border-2 border-gold/60 rounded-sm bg-ink-navy/80 overflow-hidden">
+              <div className="border-b border-gold/30 px-5 py-3 flex items-center justify-between">
+                <span className="font-mono text-gold text-[10px] tracking-[0.25em] uppercase">
+                  Admission Slip
+                </span>
+                <span className="font-mono text-gold/50 text-[10px]">
+                  2026
+                </span>
+              </div>
 
-                <div className="px-5 py-5 space-y-0">
-                  {FIELDS.map((field, i) => (
-                    <div
-                      key={field.label}
-                      className={`flex flex-col gap-1 py-3 ${
-                        i < FIELDS.length - 1 ? "slip-line" : ""
-                      }`}
-                      style={{
-                        opacity: visibleFields > i ? 1 : 0,
-                        transform: visibleFields > i ? "translateY(0)" : "translateY(8px)",
-                        transition: prefersReduced ? "none" : "all 0.5s ease-out",
-                      }}
-                    >
-                      <span className="font-mono text-gold/50 text-[10px] tracking-[0.2em] uppercase">
-                        {field.label}
-                      </span>
-                      {field.isStatus ? (
-                        <div className="flex items-center gap-2">
-                          <span className="font-mono text-gold text-sm font-medium">
-                            {field.value}
-                          </span>
-                          <span
-                            className="inline-block w-2 h-2 rounded-full bg-gold animate-pulse"
-                            aria-label="Status pending"
-                          />
-                        </div>
-                      ) : (
-                        <span className="font-mono text-white text-sm font-medium">
+              <div className="px-5 py-4">
+                {FIELDS.map((field, i) => (
+                  <div
+                    key={field.label}
+                    className={`flex flex-col gap-1 py-3 ${
+                      i < FIELDS.length - 1 ? "slip-line" : ""
+                    }`}
+                    style={{
+                      opacity: visibleFields > i ? 1 : 0,
+                      transform: visibleFields > i ? "translateY(0)" : "translateY(8px)",
+                      transition: prefersReduced ? "none" : "all 0.5s ease-out",
+                    }}
+                  >
+                    <span className="font-mono text-gold/50 text-[10px] tracking-[0.2em] uppercase">
+                      {field.label}
+                    </span>
+                    {field.isStatus ? (
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-gold text-sm font-medium">
                           {field.value}
                         </span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-
-                <div className="border-t border-gold/30 px-5 py-3 flex items-center justify-between">
-                  <span className="font-mono text-slate-light text-[10px]">
-                    This is a demo — yours will look like this
-                  </span>
-                  <div className="w-8 h-8 border border-gold/30 rounded-sm flex items-center justify-center">
-                    <span className="font-display text-gold text-xs font-bold">E</span>
+                        <span
+                          className="inline-block w-2 h-2 rounded-full bg-gold animate-pulse"
+                          aria-label="Status pending"
+                        />
+                      </div>
+                    ) : (
+                      <span className="font-mono text-white text-sm font-medium">
+                        {field.value}
+                      </span>
+                    )}
                   </div>
+                ))}
+              </div>
+
+              <div className="border-t border-gold/30 px-5 py-3 flex items-center justify-between">
+                <span className="font-mono text-slate-light text-[10px]">
+                  This is a demo — yours will look like this
+                </span>
+                <div className="w-8 h-8 border border-gold/30 rounded-sm flex items-center justify-center">
+                  <span className="font-display text-gold text-xs font-bold">E</span>
                 </div>
               </div>
             </div>

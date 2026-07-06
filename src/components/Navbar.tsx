@@ -8,7 +8,7 @@ export default function Navbar() {
 
   return (
     <header className="bg-ink-navy border-b border-gold/20 sticky top-0 z-50">
-      <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <nav className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
           <div className="w-8 h-8 border-2 border-gold rounded flex items-center justify-center">
             <span className="font-display text-gold text-sm font-bold">E</span>

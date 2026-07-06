@@ -21,7 +21,7 @@ const STEPS = [
 export default function StepsSection() {
   return (
     <section className="py-16 sm:py-20 bg-white border-y border-paper">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="mb-10">
           <p className="font-mono text-gold text-xs tracking-[0.2em] uppercase mb-2">
             How it works
@@ -31,7 +31,7 @@ export default function StepsSection() {
           </h2>
         </div>
 
-        <div className="grid sm:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-3 gap-8">
           {STEPS.map((step) => (
             <div key={step.number} className="group">
               <div className="flex items-center gap-3 mb-3">
