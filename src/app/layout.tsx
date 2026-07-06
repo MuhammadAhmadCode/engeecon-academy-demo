@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   title: "Engeecon Academy — MDCAT & FSC Entry Test Prep",
   description:
     "Premium MDCAT and FSC entry-test preparation. Apply online, track your admission, and secure your seat at Engeecon Academy.",
-  keywords: "MDCAT, FSC, entry test, Engeecon Academy, admission, preparation",
+  keywords: ["MDCAT", "FSC", "entry test", "Engeecon Academy", "admission", "preparation"],
 };
 
 export default function RootLayout({

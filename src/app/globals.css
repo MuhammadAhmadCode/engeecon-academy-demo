@@ -2,9 +2,11 @@
 
 @theme inline {
   --color-ink-navy: #0B1D3A;
+  --color-ink-navy-light: #122B52;
   --color-paper: #EDEFF2;
   --color-gold: #C9A227;
   --color-gold-dark: #A88520;
+  --color-gold-light: #D4B44A;
   --color-stamp-red: #C0392B;
   --color-slate: #333B4D;
   --color-slate-light: #6B7280;
@@ -39,52 +41,33 @@ html {
 }
 
 body {
-  background-color: #EDEFF2;
-  color: #333B4D;
+  background-color: var(--color-paper);
+  color: var(--color-slate);
   font-family: var(--font-inter), sans-serif;
   min-height: 100vh;
 }
 
 ::selection {
-  background-color: #C9A227;
-  color: #0B1D3A;
+  background-color: var(--color-gold);
+  color: var(--color-ink-navy);
 }
 
 :focus-visible {
-  outline: 2px solid #C9A227;
+  outline: 2px solid var(--color-gold);
   outline-offset: 2px;
 }
 
-@keyframes slip-type {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
 @keyframes slip-fade {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes slip-stamp {
-  0% { transform: scale(2) rotate(-15deg); opacity: 0; }
-  60% { transform: scale(1.1) rotate(-12deg); opacity: 0.8; }
-  100% { transform: scale(1) rotate(-12deg); opacity: 1; }
-}
-
-.animate-slip-fade {
-  animation: slip-fade 0.6s ease-out forwards;
-}
-
-.animate-slip-stamp {
-  animation: slip-stamp 0.4s ease-out forwards;
-}
-
-.slip-field-enter {
-  opacity: 0;
-  transform: translateY(8px);
-  animation: slip-fade 0.5s ease-out forwards;
-}
-
 .slip-line {
-  border-bottom: 1px solid rgba(201, 162, 39, 0.3);
+  border-bottom: 1px solid rgba(201, 162, 39, 0.25);
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-ink-navy) 20%, var(--color-ink-navy) 80%, transparent);
+  opacity: 0.1;
 }
