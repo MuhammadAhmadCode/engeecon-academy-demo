@@ -5,8 +5,6 @@ import { uploadImage } from "@/lib/cloudinary";
 
 export async function POST(request: NextRequest) {
   try {
-    await connectDB();
-
     const formData = await request.formData();
 
     const honeypot = formData.get("honeypot");
@@ -31,9 +29,23 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Payment proof is required" }, { status: 400 });
     }
 
+    try {
+      await connectDB();
+    } catch (dbError) {
+      console.error("DB connection error:", dbError);
+      return NextResponse.json({ error: "Database connection failed" }, { status: 503 });
+    }
+
     const bytes = await paymentProof.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const paymentProofUrl = await uploadImage(buffer, "engeecon/payments");
+
+    let paymentProofUrl: string;
+    try {
+      paymentProofUrl = await uploadImage(buffer, "engeecon/payments");
+    } catch (uploadError) {
+      console.error("Cloudinary upload error:", uploadError);
+      return NextResponse.json({ error: "Failed to upload payment proof" }, { status: 500 });
+    }
 
     const admission = await Admission.create({
       studentName: formData.get("studentName"),

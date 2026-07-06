@@ -10,7 +10,12 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    await connectDB();
+    try {
+      await connectDB();
+    } catch (dbError) {
+      console.error("DB connection error:", dbError);
+      return NextResponse.json({ error: "Database connection failed" }, { status: 503 });
+    }
 
     const { searchParams } = new URL(request.url);
     const status = searchParams.get("status");

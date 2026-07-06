@@ -6,12 +6,17 @@ import { signToken } from "@/lib/auth";
 
 export async function POST(request: NextRequest) {
   try {
-    await connectDB();
-
     const { email, password } = await request.json();
 
     if (!email || !password) {
       return NextResponse.json({ error: "Email and password required" }, { status: 400 });
+    }
+
+    try {
+      await connectDB();
+    } catch (dbError) {
+      console.error("DB connection error:", dbError);
+      return NextResponse.json({ error: "Database connection failed. Check your MongoDB URI." }, { status: 503 });
     }
 
     const admin = await Admin.findOne({ email: email.toLowerCase() });

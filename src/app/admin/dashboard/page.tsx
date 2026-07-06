@@ -54,8 +54,13 @@ export default function AdminDashboard() {
         return;
       }
 
-      const data = await res.json();
-      setAdmissions(data.admissions || []);
+      const text = await res.text();
+      try {
+        const data = JSON.parse(text);
+        setAdmissions(data.admissions || []);
+      } catch {
+        console.error("Non-JSON response:", text.slice(0, 100));
+      }
     } catch {
       console.error("Failed to fetch admissions");
     } finally {

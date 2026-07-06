@@ -22,7 +22,13 @@ export default function AdminLoginPage() {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
+      const text = await res.text();
+      let data: Record<string, string>;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error(`Server error (${res.status}): ${text.slice(0, 100)}`);
+      }
 
       if (!res.ok) {
         throw new Error(data.error || "Login failed");

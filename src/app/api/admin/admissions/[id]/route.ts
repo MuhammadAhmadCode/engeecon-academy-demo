@@ -13,7 +13,12 @@ export async function PATCH(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    await connectDB();
+    try {
+      await connectDB();
+    } catch (dbError) {
+      console.error("DB connection error:", dbError);
+      return NextResponse.json({ error: "Database connection failed" }, { status: 503 });
+    }
 
     const { id } = await params;
     const { status } = await request.json();
