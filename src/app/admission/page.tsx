@@ -76,14 +76,23 @@ export default function AdmissionPage() {
     return (
       <div className="min-h-[80vh] flex items-center justify-center py-16 px-6">
         <div className="w-full max-w-md animate-fade-up">
-          <div className="slip-card rounded-2xl overflow-hidden">
-            <div className="border-b border-white/[0.06] px-6 py-4 flex items-center justify-between">
-              <span className="text-gold text-[11px] font-semibold tracking-widest uppercase">Application Received</span>
-              <span className="text-white/20 text-[11px] font-mono">2026</span>
+          {/* Dark card with solid navy background */}
+          <div className="bg-ink-navy rounded-2xl overflow-hidden shadow-2xl shadow-black/20">
+            {/* Header */}
+            <div className="border-b border-white/10 px-6 py-4 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="w-6 h-6 bg-gold/15 border border-gold/30 rounded-lg flex items-center justify-center">
+                  <span className="font-display text-gold text-[9px] font-bold">E</span>
+                </div>
+                <span className="text-gold text-[11px] font-semibold tracking-widest uppercase">Application Received</span>
+              </div>
+              <span className="text-white/25 text-[11px] font-mono">2026</span>
             </div>
-            <div className="px-6 py-6 space-y-4">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl mx-auto flex items-center justify-center mb-4">
+
+            {/* Body */}
+            <div className="px-6 py-8 space-y-5">
+              <div className="text-center mb-2">
+                <div className="w-16 h-16 bg-emerald-500/15 border border-emerald-500/30 rounded-2xl mx-auto flex items-center justify-center mb-4">
                   <svg className="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
@@ -91,19 +100,23 @@ export default function AdmissionPage() {
                 <h2 className="font-display text-white text-xl font-bold mb-1">Application Received</h2>
                 <p className="text-white/40 text-sm">We&apos;ll review your application within 24 hours.</p>
               </div>
+
               {[["Applicant", form.studentName], ["Session", form.sessionDate], ["Status", "Pending"]].map(([l, v]) => (
-                <div key={l as string} className="slip-line py-3">
-                  <span className="text-white/25 text-[10px] font-semibold tracking-[0.2em] uppercase block mb-1">{l}</span>
+                <div key={l as string} className="border-b border-white/10 py-3.5">
+                  <span className="text-white/30 text-[10px] font-semibold tracking-[0.2em] uppercase block mb-1">{l}</span>
                   <span className="text-white text-sm font-medium">{v}</span>
                 </div>
               ))}
             </div>
-            <div className="border-t border-white/[0.06] px-6 py-3.5 text-center">
-              <p className="text-white/15 text-[10px]">Save this page — your reference for any follow-up</p>
+
+            {/* Footer */}
+            <div className="border-t border-white/10 px-6 py-3.5 text-center bg-white/[0.03]">
+              <p className="text-white/20 text-[10px]">Save this page — your reference for any follow-up</p>
             </div>
           </div>
-          <div className="mt-6 text-center">
-            <a href="/" className="text-gold/60 text-sm hover:text-gold transition-colors">Back to Home</a>
+
+          <div className="mt-8 text-center">
+            <a href="/" className="text-ink-navy text-sm font-medium hover:text-gold transition-colors">Back to Home</a>
           </div>
         </div>
       </div>
