@@ -51,8 +51,9 @@ body {
 /* ── Hero ── */
 .hero-bg {
   background:
-    radial-gradient(ellipse at 70% 50%, rgba(201, 162, 39, 0.05) 0%, transparent 45%),
-    linear-gradient(135deg, var(--color-ink-navy) 0%, var(--color-ink-navy-light) 100%);
+    radial-gradient(ellipse 80% 60% at 75% 45%, rgba(201, 162, 39, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 80% at 15% 85%, rgba(18, 43, 82, 0.6) 0%, transparent 60%),
+    linear-gradient(135deg, var(--color-ink-navy) 0%, var(--color-ink-navy-light) 50%, var(--color-ink-navy) 100%);
 }
 
 /* ── Slip Card ── */

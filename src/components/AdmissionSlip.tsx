@@ -30,8 +30,29 @@ export default function AdmissionSlip() {
 
   return (
     <section className="hero-bg relative overflow-hidden min-h-[85vh] flex items-center">
-      {/* subtle grid pattern on top of gradient */}
-      <div className="absolute inset-0 opacity-[0.015]" style={{
+      {/* Diagonal light band — structural depth */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'linear-gradient(135deg, transparent 30%, rgba(18,43,82,0.4) 45%, rgba(18,43,82,0.15) 55%, transparent 70%)',
+        }}
+      />
+      {/* Secondary wash from bottom-right */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse 70% 50% at 85% 90%, rgba(18,43,82,0.5) 0%, transparent 60%)',
+        }}
+      />
+      {/* Top-left accent beam */}
+      <div
+        className="absolute -top-1/4 -left-1/4 w-[80%] h-[80%] pointer-events-none rotate-12"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(18,43,82,0.35) 0%, transparent 65%)',
+        }}
+      />
+      {/* Grid texture on top of all gradients */}
+      <div className="absolute inset-0 opacity-[0.018]" style={{
         backgroundImage: `linear-gradient(rgba(201,162,39,1) 1px, transparent 1px), linear-gradient(90deg, rgba(201,162,39,1) 1px, transparent 1px)`,
         backgroundSize: '80px 80px',
       }} />
