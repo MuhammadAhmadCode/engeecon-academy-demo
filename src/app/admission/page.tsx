@@ -11,7 +11,7 @@ const SESSION_OPTIONS = [
   "October 2026 — Evening",
 ];
 
-const PAYMENT_METHODS = ["EasyPaisa", "JazzCash", "Meezan Bank", "HBL"];
+const PAYMENT_METHODS = ["EasyPaisa", "JazzCash", "HBL"];
 
 interface FormData {
   studentName: string;
@@ -123,7 +123,19 @@ export default function AdmissionPage() {
         <div className="mb-10">
           <p className="font-mono text-gold text-xs font-semibold tracking-[0.2em] uppercase mb-2">Apply Online</p>
           <h1 className="font-display text-ink-navy text-3xl sm:text-4xl font-bold mb-2">Admission Form</h1>
-          <p className="font-body text-slate-light text-sm">Fill in your details below. All fields are required.</p>
+          <p className="font-body text-slate-light text-sm mb-5">Fill in your details below. All fields are required.</p>
+
+          {/* Fee badge */}
+          <div className="inline-flex items-center gap-3 bg-ink-navy rounded-xl px-5 py-3">
+            <div className="text-right">
+              <span className="text-white/30 text-xs font-mono line-through block">Rs. 36,000</span>
+              <span className="font-display text-gold text-xl font-bold">Rs. 18,000</span>
+            </div>
+            <div className="h-8 w-px bg-white/10" />
+            <span className="bg-stamp-red/15 border border-stamp-red/30 text-stamp-red text-[11px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-md font-mono">
+              Limited Time Offer
+            </span>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6" encType="multipart/form-data">

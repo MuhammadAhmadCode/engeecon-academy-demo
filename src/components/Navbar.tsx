@@ -43,6 +43,9 @@ export default function Navbar() {
           <Link href="/admission" className="text-white/50 hover:text-white hover:bg-white/[0.06] text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200">
             Admission
           </Link>
+          <Link href="/contact" className="text-white/50 hover:text-white hover:bg-white/[0.06] text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200">
+            Contact
+          </Link>
           <Link
             href="/admin/login"
             className="ml-2 text-sm font-medium border border-gold/25 text-gold/70 px-5 py-2 rounded-lg hover:bg-gold/10 hover:border-gold/40 hover:text-gold transition-all duration-200"
@@ -77,6 +80,9 @@ export default function Navbar() {
           </Link>
           <Link href="/admission" onClick={() => setMobileOpen(false)} className="block text-white/60 hover:text-white hover:bg-white/[0.06] text-sm font-medium px-4 py-2.5 rounded-lg transition-all">
             Admission
+          </Link>
+          <Link href="/contact" onClick={() => setMobileOpen(false)} className="block text-white/60 hover:text-white hover:bg-white/[0.06] text-sm font-medium px-4 py-2.5 rounded-lg transition-all">
+            Contact
           </Link>
           <Link href="/admin/login" onClick={() => setMobileOpen(false)} className="block text-sm font-medium border border-gold/25 text-gold/70 px-4 py-2.5 rounded-lg text-center hover:bg-gold/10 transition-all mt-2">
             Admin
